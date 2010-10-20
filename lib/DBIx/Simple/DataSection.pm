@@ -44,16 +44,24 @@ __END__
 
 =head1 NAME
 
-DBIx::Simple::DataSection -
+DBIx::Simple::DataSection - 
 
 =head1 SYNOPSIS
 
-  use DBIx::Simple::DataSection;
+  use DBIx::Simple::DataSection; 
+  my $db = DBIx::Simple::DataSection->connect('dbi:SQLite:dbname=../db/hoge.db')
+    or die DBIx::Simple::DataSection->error;
+
+  my $rs = $db->query_by_sql('select.sql', $foo, $bar) 
+    or die $db->error;
+  
+  __DATA__
+  @@ select.sql 
+  SELECT FROM foo WHERE foo = ? OR bar = ?
 
 =head1 DESCRIPTION
 
 DBIx::Simple::DataSection is
-
 
 =head1 SOURCE AVAILABILITY
 
