@@ -52,9 +52,10 @@ DBIx::Simple::DataSection -
 =head1 SYNOPSIS
 
   use DBIx::Simple::DataSection; 
-  my $db = DBIx::Simple::DataSection->connect('dbi:SQLite:dbname=../db/hoge.db')
-    or die DBIx::Simple::DataSection->error;
-
+  my $dbh = ...
+  my $db = DBIx::Simple::DataSection->connect($dbh)
+  my $foo = ... 
+  my $bar = ...
   my $rs = $db->query_by_sql('select.sql', $foo, $bar) 
     or die $db->error;
   
