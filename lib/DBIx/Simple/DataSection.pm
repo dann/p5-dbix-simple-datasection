@@ -4,6 +4,9 @@ use warnings;
 use base 'DBIx::Simple';
 our $VERSION = '0.01';
 
+# not tested yet!!!
+# I'll test this module this week :)
+
 use Carp;
 use Data::Section::Simple;
 
