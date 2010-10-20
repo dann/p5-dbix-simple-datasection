@@ -11,6 +11,7 @@ sub new {
     my $self = shift->SUPER::new(@_);
     $self->{package} ||= scalar caller;
     $self->{section} = Data::Section::Simple->new( $self->{package} );
+    $self->{cache} = {};
     $self;
 }
 
