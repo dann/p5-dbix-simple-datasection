@@ -22,7 +22,6 @@ sub connect {
 sub _init {
     my $self = shift;
     $self->{package} ||= scalar caller(1);
-    warn $self->{package};
     $self->{section} = Data::Section::Simple->new( $self->{package} );
     $self->{cache}   = {};
 }
@@ -56,13 +55,16 @@ __END__
 
 =head1 NAME
 
-DBIx::Simple::DataSection - 
+DBIx::Simple::DataSection - executes the sql in the __DATA__ section 
 
 =head1 SYNOPSIS
 
+  # Create db instance
   use DBIx::Simple::DataSection; 
   my $dbh = ...
   my $db = DBIx::Simple::DataSection->connect($dbh)
+
+  # Execute the query which is defined in __DATA__ section
   my $foo = ... 
   my $bar = ...
   my $rs = $db->query_by_sql('select.sql', $foo, $bar) 
@@ -74,18 +76,14 @@ DBIx::Simple::DataSection -
 
 =head1 DESCRIPTION
 
-DBIx::Simple::DataSection is
+DBIx::Simple::DataSection is a simple DBIx::Simple wrapper module which allows you 
+to execute the sql defined in __DATA__ section.
 
 =head1 SOURCE AVAILABILITY
 
 This source is in Github:
 
-  http://github.com/dann/
-
-=head1 CONTRIBUTORS
-
-Many thanks to:
-
+  http://github.com/dann/p5-dbix-simple-datasection
 
 =head1 AUTHOR
 
