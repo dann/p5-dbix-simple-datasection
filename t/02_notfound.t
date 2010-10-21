@@ -15,11 +15,12 @@ BEGIN {
 
 my $db = DBIx::Simple::DataSection->connect('dbi:SQLite:dbname=:memory:', '', '', { RaiseError => 1 });
 ok($db);
-ok($db->query_by_sql('create.sql'));
-ok($db->query_by_sql('insert1.sql', qw(a b c)));
-is_deeply([ $db->query_by_sql('select.sql')->flat ], [ qw(a b c) ]);
-ok($db->query_by_sql('insert2.sql', qw(d e f)));
 
+eval {
+    $db->query_by_sql('notfound.sql')
+};
+
+ok(1) if($@);
 
 done_testing;
 
