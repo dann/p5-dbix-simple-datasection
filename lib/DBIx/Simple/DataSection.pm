@@ -8,20 +8,22 @@ use Carp;
 use Data::Section::Simple;
 
 sub new {
+    my $package = scalar caller;
     my $self = shift->SUPER::new(@_);
+    $self->{package} = $package;
     $self->_init;
     $self;
 }
 
 sub connect {
     my $self = shift->SUPER::connect(@_);
+    $self->{package} ||= scalar caller(0);
     $self->_init;
     $self;
 }
 
 sub _init {
     my $self = shift;
-    $self->{package} ||= scalar caller(1);
     $self->{section} = Data::Section::Simple->new( $self->{package} );
     $self->{cache}   = {};
 }
