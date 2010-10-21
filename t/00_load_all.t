@@ -1,7 +1,6 @@
+use Test::More;
 use strict;
 use warnings;
-use Test::LoadAllModules;
+use_ok('DBIx::Simple::DataSection');
 
-BEGIN {    
-    all_uses_ok(search_path => 'DBIx::Simple::DataSection');
-}
+done_testing;

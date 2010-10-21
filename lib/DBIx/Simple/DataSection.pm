@@ -12,10 +12,22 @@ use Data::Section::Simple;
 
 sub new {
     my $self = shift->SUPER::new(@_);
-    $self->{package} ||= scalar caller;
-    $self->{section} = Data::Section::Simple->new( $self->{package} );
-    $self->{cache} = {};
+    $self->_init;
     $self;
+}
+
+sub connect {
+    my $self = shift->SUPER::connect(@_);
+    $self->_init;
+    $self;
+}
+
+sub _init {
+    my $self = shift;
+    $self->{package} ||= scalar caller(1);
+    warn $self->{package};
+    $self->{section} = Data::Section::Simple->new( $self->{package} );
+    $self->{cache}   = {};
 }
 
 # other name?
