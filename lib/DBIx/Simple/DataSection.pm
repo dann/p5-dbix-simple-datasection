@@ -2,21 +2,38 @@ package DBIx::Simple::DataSection;
 use strict;
 use warnings;
 use base 'DBIx::Simple';
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Carp;
 use Data::Section::Simple;
 
 sub new {
     my $package = scalar caller;
-    my $self = shift->SUPER::new(@_);
+    my $self    = shift->SUPER::new(@_);
+    $self->force_utf8();
     $self->{package} = $package;
     $self->_init;
     $self;
 }
 
+sub force_utf8 {
+    my $self = shift;
+    return unless $self->{dbd};
+    my $driver_name = $self->{dbd};
+    if ( $driver_name eq 'Pg' ) {
+        $self->{dbh}->{pg_enable_utf8} = 1;
+    }
+    elsif ( $driver_name eq 'mysql' ) {
+        $self->{dbh}->{mysql_enable_utf8} = 1;
+    }
+    elsif ( $driver_name eq 'SQLite' ) {
+        $self->{dbh}->{unicode} = 1;
+    }
+}
+
 sub connect {
     my $self = shift->SUPER::connect(@_);
+    $self->force_utf8();
     $self->{package} ||= scalar caller(0);
     $self->_init;
     $self;
@@ -28,7 +45,6 @@ sub _init {
     $self->{cache}   = {};
 }
 
-# other name?
 sub query_by_sql {
     my ( $self, $sql_name, @binds ) = @_;
     my $query = $self->get_sql($sql_name);
